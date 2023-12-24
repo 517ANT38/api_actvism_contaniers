@@ -6,13 +6,13 @@ networks:
 
 
 services:
-  client-backend:
-    image: app/activism
-    container_name: cl_bk
-    ports:
-      - "8181:8181"
-    depends_on:
-      - service-db 
+  # client-backend:
+  #   image: app/activism
+  #   container_name: cl_bk
+  #   ports:
+  #     - "8181:8181"
+  #   depends_on:
+  #     - service-db 
 
   service-db:
     image: postgres:15-alpine
@@ -20,8 +20,9 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+    command: ["postgres", "-c","port=6101"]
     ports:
-      - "15432:5432"
+      - "6101:6101"
     volumes:
       - ./infrastructure/db/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
     networks:

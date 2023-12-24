@@ -3,10 +3,7 @@ package com.charity.activism.services;
 import java.sql.Date;
 import java.util.List;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
 import com.charity.activism.exceptions.ActivismUserNotFoundException;
 import com.charity.activism.exceptions.FondNotFoundException;
 import com.charity.activism.exceptions.UserActivismFondNotFoundException;

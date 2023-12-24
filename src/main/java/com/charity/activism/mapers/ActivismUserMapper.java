@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import com.charity.activism.dto.ActivismUserDtioOut;
 import com.charity.activism.dto.ActivismUserDto;
 import com.charity.activism.models.ActivismUser;
-import com.charity.activism.models.Role;
 import com.charity.activism.models.Subdivision;
 
 @Component
