@@ -1,7 +1,6 @@
 package com.charity.activism.repositories;
 
 import com.charity.activism.models.ActivismUser;
-import com.charity.activism.models.Role;
 import com.charity.activism.models.Subdivision;
 
 import java.util.List;
@@ -22,8 +21,8 @@ public interface ActivismUserRepo extends JpaRepository<ActivismUser,Integer> {
     List<ActivismUser> findFirst10OrderByCountUserActivismFondsAsc();
 
     @Modifying
-    @Query("update ActivismUser a set a.role=:r where a.id=:id")
-    void updateRoleUser(@Param("r") Role r,@Param("id") int id);
+    @Query(value = "insert into roleuser(idrole,iduser) values(:idR, :id)", nativeQuery = true)
+    void addRoleUser(@Param("idR") int  idRole,@Param("id") int id);
 
     Optional<ActivismUser> findByLogin(String  login);
 

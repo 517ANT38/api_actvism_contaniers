@@ -61,9 +61,9 @@ public class ActivismUserController {
         return ResponseEntity.ok().body(mapper.toDto(aService.getById(id)));
     }
 
-    @GetMapping("/{id}/updateRole")
-    public ResponseEntity<IdDto> updateRole(@PathVariable("id") int id){
-        return ResponseEntity.ok().body(new IdDto(aService.updateRoleUser(id)));
+    @GetMapping("/{id}/addRole/{role}")
+    public ResponseEntity<IdDto> addRole(@PathVariable("id") int id,String roleName){
+        return ResponseEntity.ok().body(new IdDto(aService.addRoleUser(id,roleName)));
     }
 
 }

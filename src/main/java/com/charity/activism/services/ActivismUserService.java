@@ -9,6 +9,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import com.charity.activism.exceptions.ActivismUserNotFoundException;
+import com.charity.activism.exceptions.RoleNotFoundException;
 import com.charity.activism.exceptions.SubdivisionNotFoundException;
 import com.charity.activism.exceptions.UserActivismFondNotFoundException;
 import com.charity.activism.models.ActivismUser;
@@ -97,10 +99,13 @@ public class ActivismUserService {
 
     @Transactional
     @PreAuthorize("hasRole('ADMIN')")
-    public int updateRoleUser(int id){
-        var r = pRepository.findByNameRole("ROLE_ADMIN").orElse(new Role("ROLE_ADMIN"));
-        
-        activismUserRepo.updateRoleUser(r, id);
+    public int addRoleUser(int id, String nameRole){
+        var r = pRepository.findByNameRole(nameRole)
+            .orElseThrow(RoleNotFoundException::new);
+        if(!activismUserRepo.existsById(id)){
+            throw new ActivismUserNotFoundException();
+        }
+        activismUserRepo.addRoleUser(r.getId(), id);
 
         return id;
     }

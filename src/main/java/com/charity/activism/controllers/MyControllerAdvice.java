@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.charity.activism.exceptions.ActivismNotFoundException;
 import com.charity.activism.exceptions.ActivismUserNotFoundException;
 import com.charity.activism.exceptions.FondNotFoundException;
+import com.charity.activism.exceptions.RoleNotFoundException;
 import com.charity.activism.exceptions.SubdivisionNotFoundException;
 import com.charity.activism.exceptions.UserActivismFondNotFoundException;
 import com.charity.activism.util.ResponseError;
@@ -37,6 +38,14 @@ public class MyControllerAdvice {
 
     @ExceptionHandler(ActivismUserNotFoundException.class)
     private ResponseEntity<ResponseError> handleExceotion(ActivismUserNotFoundException a){
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(new ResponseError(a.getMessage(),
+                        LocalDateTime.now().toString()));
+    }
+
+    @ExceptionHandler(RoleNotFoundException.class)
+    private ResponseEntity<ResponseError> handleExceotion(RoleNotFoundException a){
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(new ResponseError(a.getMessage(),
