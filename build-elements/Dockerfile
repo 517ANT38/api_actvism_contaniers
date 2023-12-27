@@ -1,4 +1,4 @@
-FROM maven:3.8.4-openjdk-17 as build
+FROM eclipse-temurin:17-jdk-alpine as build
 WORKDIR /workspace/app
 
 COPY --chmod=0755 mvnw .
@@ -16,8 +16,8 @@ FROM eclipse-temurin:17-jre-alpine
 VOLUME /tmp
 ARG WORKSPACE=/workspace/app
 ARG DEPENDENCY=/workspace/app/target/dependency
-ARG APPUSER=demo
-ARG APPGROUP=demo
+ARG APPUSER=ant
+ARG APPGROUP=ant
 ENV APPLICATIONCLASS=com.charity.activism.ActivismAndCharityApplication
 
 
