@@ -5,6 +5,8 @@ import lombok.Data;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Table
 @Entity
 @Data
@@ -17,5 +19,6 @@ public class TypeFond {
     private String name;
 
     @OneToMany(mappedBy = "typeFond")
+    @JsonIgnore
     private List<Fond> fonds;
 }

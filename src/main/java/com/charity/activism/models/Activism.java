@@ -5,6 +5,8 @@ import lombok.Data;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Table
 @Entity
 @Data
@@ -19,6 +21,7 @@ public class Activism {
     private double pay;
 
     @OneToMany(mappedBy = "activism")
+    @JsonIgnore
     private List<UserActivismFond> userActivismFonds;
 
 }
