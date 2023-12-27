@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.charity.activism.dto.IdDto;
 import com.charity.activism.models.Fond;
 import com.charity.activism.services.FondService;
 
@@ -49,10 +50,10 @@ public class FondController {
     }
 
     @PutMapping("/save")
-    public ResponseEntity<Integer> save(@RequestBody Fond fond){
+    public ResponseEntity<IdDto> save(@RequestBody Fond fond){
         return ResponseEntity
                         .ok()
-                        .body(fService.save(fond));
+                        .body(new IdDto(fService.save(fond)));
     }
 
 

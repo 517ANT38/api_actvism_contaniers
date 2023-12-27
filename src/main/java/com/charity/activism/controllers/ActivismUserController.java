@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.charity.activism.dto.ActivismUserDtioOut;
 import com.charity.activism.dto.ActivismUserDto;
+import com.charity.activism.dto.IdDto;
 import com.charity.activism.mapers.ActivismUserMapper;
 import com.charity.activism.services.ActivismUserService;
 
@@ -29,15 +30,16 @@ public class ActivismUserController {
     private final ActivismUserMapper mapper;
 
     @PutMapping("/save")
-    public ResponseEntity<Integer> save(@RequestBody ActivismUserDto aDto){
+    public ResponseEntity<IdDto> save(@RequestBody ActivismUserDto aDto){
         var a = mapper.toEntity(aDto);
-        return ResponseEntity.ok().body(aService.save(a));
+        return ResponseEntity.ok().body(new IdDto(aService.save(a)));
 
     }
     
     @GetMapping
     public ResponseEntity<List<ActivismUserDtioOut>> getAll(){
-        return ResponseEntity.ok().body(aService.getAll().stream().map(mapper::toDto).toList());
+        return ResponseEntity.ok().body(aService.getAll().stream()
+            .map(mapper::toDto).toList());
     }
 
     @GetMapping("/subdivision/{id}")
@@ -60,8 +62,8 @@ public class ActivismUserController {
     }
 
     @GetMapping("/{id}/updateRole")
-    public ResponseEntity<Integer> updateRole(@PathVariable("id") int id){
-        return ResponseEntity.ok().body(aService.updateRoleUser(id));
+    public ResponseEntity<IdDto> updateRole(@PathVariable("id") int id){
+        return ResponseEntity.ok().body(new IdDto(aService.updateRoleUser(id)));
     }
 
 }
