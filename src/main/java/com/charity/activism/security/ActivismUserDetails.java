@@ -1,13 +1,13 @@
 package com.charity.activism.security;
 
 import java.util.Collection;
-import java.util.Collections;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.charity.activism.models.ActivismUser;
+import com.charity.activism.models.Role;
 
 import lombok.AllArgsConstructor;
 
@@ -17,7 +17,11 @@ public class ActivismUserDetails implements UserDetails {
     private final ActivismUser aUser;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(aUser.getRole().getNameRole()));
+        return aUser.getRoles().stream()
+            .map(Role::getNameRole)
+            .map(SimpleGrantedAuthority::new)
+            .toList();
+        
     }
 
     @Override
@@ -28,7 +32,6 @@ public class ActivismUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        // TODO Auto-generated method stub
         return aUser.getLogin();
     }
 

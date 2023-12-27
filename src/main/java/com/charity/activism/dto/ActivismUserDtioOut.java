@@ -1,5 +1,6 @@
 package com.charity.activism.dto;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,5 +14,5 @@ public class ActivismUserDtioOut {
     private String middleName;
     private String login;
     private String subdivision;
-    private String role;
+    private List<String> roles;
 }

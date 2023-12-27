@@ -16,7 +16,7 @@ public class ActivismUserMapper {
         a.setLastName(aDto.getLastName());
         a.setMiddleName(aDto.getMiddleName());
         a.setLogin(aDto.getLogin());
-        a.setRole(aDto.getRole().getNameRole());
+        a.setRoles(aDto.getRoles().stream().map(x -> x.getNameRole()).toList());
         a.setSubdivision(aDto.getSubdivision().getName());
         return a;
     }

@@ -1,6 +1,7 @@
 package com.charity.activism.controllers;
 
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.charity.activism.dto.AuthenticationDto;
 import com.charity.activism.dto.TokenDto;
+import com.charity.activism.models.Role;
 import com.charity.activism.security.JWTUtil;
 import com.charity.activism.services.ActivismUserService;
 import com.charity.activism.util.ResponseError;
@@ -42,7 +44,11 @@ public class AuthController {
 
         var p = aService.getByLogin(aDto.getLogin());
 
-        String jwt = jwtUtil.generateToken(aDto.getLogin(), p.getRole().getNameRole());
+        var roles = p.getRoles().stream()
+                .map(Role::getNameRole)
+                .collect(Collectors.joining(" "));
+
+        String jwt = jwtUtil.generateToken(aDto.getLogin(), roles);
 
         return ResponseEntity.ok().body(new TokenDto(jwt));
 

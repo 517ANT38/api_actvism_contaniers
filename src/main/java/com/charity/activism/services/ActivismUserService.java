@@ -3,6 +3,7 @@ package com.charity.activism.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,7 +39,7 @@ public class ActivismUserService {
             a.setLogin("admin");
             var r = new Role("ROLE_ADMIN");
             r.setActivismUsers(List.of(a));
-            a.setRole(r);
+            a.setRoles(Set.of(r));
             a.setPassword(passwordEncoder.encode("admin"));
             activismUserRepo.save(a);
         }
@@ -47,7 +48,7 @@ public class ActivismUserService {
             a.setLogin("fisrtUser");
             var r = new Role("ROLE_USER");
             r.setActivismUsers(List.of(a));
-            a.setRole(r);
+            a.setRoles(Set.of(r));
             a.setPassword(passwordEncoder.encode("fisrtUser"));
             activismUserRepo.save(a);
         }
@@ -82,7 +83,7 @@ public class ActivismUserService {
     public int save(ActivismUser a){
         var r = pRepository.findByNameRole("ROLE_USER")
                                 .get();
-        a.setRole(r);
+        a.setRoles(Set.of(r));
         var s = subdivisionRepo.findByName(a.getSubdivision().getName())
                                 .orElse(a.getSubdivision());
         a.setSubdivision(s);
