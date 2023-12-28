@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.charity.activism.dto.FondDto;
 import com.charity.activism.dto.IdDto;
-import com.charity.activism.models.Fond;
+import com.charity.activism.mapers.FondMapper;
 import com.charity.activism.services.FondService;
 
 import lombok.AllArgsConstructor;
@@ -26,34 +27,37 @@ import lombok.AllArgsConstructor;
 public class FondController {
     
     private final FondService fService;
+    private final FondMapper mapper;
 
     @GetMapping
-    public ResponseEntity<List<Fond>> getAll(){
+    public ResponseEntity<List<FondDto>> getAll(){
         return ResponseEntity
                     .status(HttpStatus.OK)
-                    .body(fService.getAll());
+                    .body(fService.getAll().stream()
+                        .map(mapper::toDto)
+                        .toList());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Fond> getById(@PathVariable("id") int id){
+    public ResponseEntity<FondDto> getById(@PathVariable("id") int id){
         return ResponseEntity
                         .ok()
-                        .body(fService.getById(id));
+                        .body(mapper.toDto(fService.getById(id)));
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<Fond> getByName(@PathVariable("name") String name){
+    public ResponseEntity<FondDto> getByName(@PathVariable("name") String name){
         return ResponseEntity
                         .ok()
-                        .body(fService.getByName(name));
+                        .body(mapper.toDto(fService.getByName(name)));
 
     }
 
     @PutMapping("/save")
-    public ResponseEntity<IdDto> save(@RequestBody Fond fond){
+    public ResponseEntity<IdDto> save(@RequestBody FondDto fond){
         return ResponseEntity
                         .ok()
-                        .body(new IdDto(fService.save(fond)));
+                        .body(new IdDto(fService.save(mapper.toEntity(fond))));
     }
 
 

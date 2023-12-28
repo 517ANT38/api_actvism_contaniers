@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.charity.activism.models.Subdivision;
+import com.charity.activism.dto.IdDto;
+import com.charity.activism.dto.NewSubdivisionDto;
+import com.charity.activism.dto.SubdivisionDto;
+import com.charity.activism.mapers.SubdivisionMapper;
 import com.charity.activism.services.SubdivisionService;
 
 import lombok.AllArgsConstructor;
@@ -24,20 +27,23 @@ import lombok.AllArgsConstructor;
 public class SubdivisionController {
     
     private final SubdivisionService subdivisionService;
+    private final SubdivisionMapper mapper;
 
     @GetMapping
-    public ResponseEntity<List<Subdivision>> getAll(){
-        return ResponseEntity.ok().body(subdivisionService.getAll());
+    public ResponseEntity<List<SubdivisionDto>> getAll(){
+        return ResponseEntity.ok().body(subdivisionService.getAll().stream()
+            .map(mapper::toDto)
+            .toList());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Subdivision> getById(@PathVariable("id") int id){
-        return ResponseEntity.ok().body(subdivisionService.getById(id));
+    public ResponseEntity<SubdivisionDto> getById(@PathVariable("id") int id){
+        return ResponseEntity.ok().body(mapper.toDto(subdivisionService.getById(id)));
     }
 
     @PutMapping
-    public ResponseEntity<Integer> save(@RequestBody Subdivision s){
-        return ResponseEntity.ok().body(subdivisionService.save(s));
+    public ResponseEntity<IdDto> save(@RequestBody NewSubdivisionDto s){
+        return ResponseEntity.ok().body(new IdDto(subdivisionService.save(mapper.toEntity(s))));
     }
 
 }

@@ -81,7 +81,11 @@ public class UserActivismFondService {
     }
 
     @Transactional
-    public int save(UserActivismFond uFond){
+    public int save(UserActivismFond uFond, int idUser){
+        var user = aUserRepo.findById(idUser)
+            .orElseThrow(ActivismUserNotFoundException::new);
+        uFond.setUser(user);
+        user.getUserActivismFonds().add(uFond);
         return uActivismFondRepo.save(uFond).getId();
     }
 

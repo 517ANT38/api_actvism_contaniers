@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.charity.activism.dto.ActivismUserDtioOut;
+import com.charity.activism.dto.IdDto;
+import com.charity.activism.dto.NewUserActivismFondDto;
+import com.charity.activism.dto.UserActivismFondDto;
 import com.charity.activism.mapers.ActivismUserMapper;
-import com.charity.activism.models.UserActivismFond;
+import com.charity.activism.mapers.UserActivismFondMapper;
 import com.charity.activism.services.UserActivismFondService;
 import com.charity.activism.util.DateAndSumHours;
 
@@ -30,36 +33,42 @@ import lombok.AllArgsConstructor;
 public class UserActivismFondController {
     
     private final UserActivismFondService uService;
+    private final UserActivismFondMapper mFondMapper;
     private final ActivismUserMapper mapper;
 
     @GetMapping("/user/{actUserId}")
-    public ResponseEntity<List<UserActivismFond>> getAllByUser(@PathVariable("actUserId") int actUserId){
+    public ResponseEntity<List<UserActivismFondDto>> getAllByUser(@PathVariable("actUserId") int actUserId){
                
-        return ResponseEntity.ok().body(uService.getAllByUser(actUserId));
+        return ResponseEntity.ok().body(uService.getAllByUser(actUserId).stream()
+            .map(mFondMapper::toDto).toList());
     }
 
     @GetMapping("/fond/{fondId}")
-    public ResponseEntity<List<UserActivismFond>> getAllByFond(@PathVariable("fondId") int fondId){
+    public ResponseEntity<List<UserActivismFondDto>> getAllByFond(@PathVariable("fondId") int fondId){
 
-        return ResponseEntity.ok().body(uService.getAllByFond(fondId));
+        return ResponseEntity.ok().body(uService.getAllByFond(fondId).stream()
+            .map(mFondMapper::toDto).toList());
     }
 
     @GetMapping("/activism/{actId}")
-    public ResponseEntity<List<UserActivismFond>> getAllByActivism(@PathVariable("actId") int actId){
+    public ResponseEntity<List<UserActivismFondDto>> getAllByActivism(@PathVariable("actId") int actId){
         
-        return ResponseEntity.ok().body(uService.getAllByActivism(actId));
+        return ResponseEntity.ok().body(uService.getAllByActivism(actId).stream()
+            .map(mFondMapper::toDto).toList());
     }
 
     @GetMapping
-    public ResponseEntity<List<UserActivismFond>> getAllByUserAndDate(int actUserId,Date date){
+    public ResponseEntity<List<UserActivismFondDto>> getAllByUserAndDate(int actUserId,Date date){
 
-        return ResponseEntity.ok().body(uService.getAllByUserAndDate(actUserId, date));
+        return ResponseEntity.ok().body(uService.getAllByUserAndDate(actUserId, date).stream()
+            .map(mFondMapper::toDto).toList());
     }
 
     @GetMapping("/user/{actUserId}/{id}")
-    public ResponseEntity<UserActivismFond> getByUserAndId(@PathVariable("actUserId") int actUserId,@PathVariable("id") int id){
+    public ResponseEntity<UserActivismFondDto> getByUserAndId(@PathVariable("actUserId") int actUserId,
+        @PathVariable("id") int id){
 
-        return ResponseEntity.ok().body(uService.getByUserAndId(actUserId, id));
+        return ResponseEntity.ok().body(mFondMapper.toDto(uService.getByUserAndId(actUserId, id)));
     }
 
     @GetMapping("/activism/{actId}/maxCountOurs")
@@ -78,9 +87,9 @@ public class UserActivismFondController {
         return ResponseEntity.ok().body(uService.statisticUserActivismIntervalDate(actUserId, date1, date2));
     }
    
-    @PutMapping
-    public ResponseEntity<Integer> save(UserActivismFond uFond){
-        return ResponseEntity.ok().body(uService.save(uFond));
+    @PutMapping("/user/{id}")
+    public ResponseEntity<IdDto> save(NewUserActivismFondDto uFond,@PathVariable("id") int actUserId){
+        return ResponseEntity.ok().body(new IdDto((uService.save(mFondMapper.toEntity(uFond),actUserId))));
     }
 
     @PostMapping
@@ -90,13 +99,13 @@ public class UserActivismFondController {
     }
     
     @PatchMapping("/done/{actUserId}/{id}")
-    public ResponseEntity<Integer> updateStatusDone(@PathVariable("actUserId") int actUserId,@PathVariable("id")  int id){
-        return ResponseEntity.ok().body(uService.updateStatusDone(actUserId, id));
+    public ResponseEntity<IdDto> updateStatusDone(@PathVariable("actUserId") int actUserId,@PathVariable("id")  int id){
+        return ResponseEntity.ok().body(new IdDto(uService.updateStatusDone(actUserId, id)));
     }
 
     @PatchMapping("/paid/{actUserId}/{id}")
-    public ResponseEntity<Integer> updateStatusPaid(@PathVariable("actUserId") int actUserId,@PathVariable("id")  int id){
-       return ResponseEntity.ok().body(uService.updateStatusPaid(actUserId, id));
+    public ResponseEntity<IdDto> updateStatusPaid(@PathVariable("actUserId") int actUserId,@PathVariable("id")  int id){
+       return ResponseEntity.ok().body(new IdDto(uService.updateStatusPaid(actUserId, id)));
     }
 
 }

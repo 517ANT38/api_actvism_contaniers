@@ -1,15 +1,17 @@
 package com.charity.activism.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Table
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Activism {
 
     @Id
@@ -21,7 +23,6 @@ public class Activism {
     private double pay;
 
     @OneToMany(mappedBy = "activism")
-    @JsonIgnore
     private List<UserActivismFond> userActivismFonds;
 
 }

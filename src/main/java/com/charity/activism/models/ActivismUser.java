@@ -6,7 +6,7 @@ import java.util.Set;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 import static org.hibernate.annotations.CascadeType.PERSIST;
 import static org.hibernate.annotations.CascadeType.REFRESH;
@@ -38,7 +38,6 @@ public class ActivismUser {
     private String password;
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
     private List<UserActivismFond> userActivismFonds;
 
     @ManyToMany

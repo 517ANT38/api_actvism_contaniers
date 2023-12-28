@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table
@@ -21,7 +21,6 @@ public class Subdivision {
     private String name;
 
     @OneToMany(mappedBy = "subdivision")
-    @JsonIgnore
     private List<ActivismUser> activismUsers;
 
     public Subdivision(String name) {
