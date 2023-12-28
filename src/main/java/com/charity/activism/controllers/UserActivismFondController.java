@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.charity.activism.dto.ActivismUserDtioOut;
 import com.charity.activism.dto.IdDto;
 import com.charity.activism.dto.NewUserActivismFondDto;
+import com.charity.activism.dto.ResDto;
 import com.charity.activism.dto.UserActivismFondDto;
 import com.charity.activism.mapers.ActivismUserMapper;
 import com.charity.activism.mapers.UserActivismFondMapper;
@@ -93,9 +94,9 @@ public class UserActivismFondController {
     }
 
     @PostMapping
-    public ResponseEntity<Double> getByUserSumCharity(int actUserId){
+    public ResponseEntity<ResDto<Double>> getByUserSumCharity(int actUserId){
 
-        return ResponseEntity.ok().body(uService.getByUserSumCharity(actUserId));
+        return ResponseEntity.ok().body(new ResDto<>(uService.getByUserSumCharity(actUserId)));
     }
     
     @PatchMapping("/done/{actUserId}/{id}")

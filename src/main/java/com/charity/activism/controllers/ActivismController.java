@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.charity.activism.dto.ActivismDto;
+import com.charity.activism.dto.IdDto;
 import com.charity.activism.mapers.ActivismMapper;
 import com.charity.activism.services.ActivismService;
 
@@ -52,9 +53,9 @@ public class ActivismController {
     }
 
     @PutMapping
-    public ResponseEntity<Integer> save(@RequestBody ActivismDto a){
+    public ResponseEntity<IdDto> save(@RequestBody ActivismDto a){
         
-        return ResponseEntity.ok().body(aService.save(mapper.toEntity(a)));
+        return ResponseEntity.ok().body(new IdDto(aService.save(mapper.toEntity(a))));
     }
 
 }
