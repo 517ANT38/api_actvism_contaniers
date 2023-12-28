@@ -1,18 +1,18 @@
 version: '3.8'
 
-networks:  
-  postgres:
-    driver: bridge
+
 
 
 services:
-  # client-backend:
-  #   image: app/activism
-  #   container_name: cl_bk
-  #   ports:
-  #     - "8181:8181"
-  #   depends_on:
-  #     - service-db 
+  client-backend:
+    image: app/activism
+    container_name: cl_bk
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:6101/activismandcharity
+    ports:
+      - "8181:8181"
+    depends_on:
+      - service-db 
 
   service-db:
     image: postgres:15-alpine
@@ -25,8 +25,7 @@ services:
       - "6101:6101"
     volumes:
       - ./infrastructure/db/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
-    networks:
-      - postgres
+    
 
   pgadmin:
     container_name: pgadmin4_container
@@ -37,5 +36,4 @@ services:
       PGADMIN_DEFAULT_PASSWORD: root
     ports:
       - "5050:80"
-    networks:
-      - postgres
+    
