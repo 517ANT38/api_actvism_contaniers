@@ -40,7 +40,7 @@ public class ActivismUserService {
             var a = new ActivismUser();
             a.setLogin("admin");
             var r = new Role("ROLE_ADMIN");
-            r.setActivismUsers(List.of(a));
+            r.setActivismUsers(Set.of(a));
             a.setRoles(Set.of(r));
             a.setPassword(passwordEncoder.encode("admin"));
             activismUserRepo.save(a);
@@ -49,7 +49,7 @@ public class ActivismUserService {
             var a = new ActivismUser();
             a.setLogin("fisrtUser");
             var r = new Role("ROLE_USER");
-            r.setActivismUsers(List.of(a));
+            r.setActivismUsers(Set.of(a));
             a.setRoles(Set.of(r));
             a.setPassword(passwordEncoder.encode("fisrtUser"));
             activismUserRepo.save(a);
