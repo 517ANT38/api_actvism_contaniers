@@ -4,14 +4,16 @@ import com.charity.activism.exceptions.FondNotFoundException;
 import com.charity.activism.models.Fond;
 import com.charity.activism.repositories.FondRepo;
 
-import jakarta.transaction.Transactional;
+
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Transactional(readOnly = true)
 public class FondService {
 
     private final FondRepo fondRepo;

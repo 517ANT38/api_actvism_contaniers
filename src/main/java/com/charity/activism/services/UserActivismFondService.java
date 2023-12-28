@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.charity.activism.exceptions.ActivismUserNotFoundException;
 import com.charity.activism.exceptions.FondNotFoundException;
 import com.charity.activism.exceptions.UserActivismFondNotFoundException;
@@ -15,11 +17,12 @@ import com.charity.activism.repositories.FondRepo;
 import com.charity.activism.repositories.UserActivismFondRepo;
 import com.charity.activism.util.DateAndSumHours;
 
-import jakarta.transaction.Transactional;
+
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
+@Transactional(readOnly = true)
 public class UserActivismFondService {
 
 

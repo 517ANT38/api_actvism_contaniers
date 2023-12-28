@@ -4,16 +4,17 @@ import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.charity.activism.exceptions.ActivismNotFoundException;
 import com.charity.activism.models.Activism;
 import com.charity.activism.repositories.ActivismRepo;
 
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
+@Transactional(readOnly = true)
 public class ActivismService {
 
     private final ActivismRepo activismRepo;

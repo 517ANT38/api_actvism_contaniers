@@ -8,6 +8,7 @@ import java.util.Set;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.charity.activism.exceptions.ActivismUserNotFoundException;
 import com.charity.activism.exceptions.RoleNotFoundException;
@@ -20,11 +21,11 @@ import com.charity.activism.repositories.RoleRepository;
 import com.charity.activism.repositories.SubdivisionRepo;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 @Repository
 @AllArgsConstructor
+@Transactional(readOnly = true)
 public class ActivismUserService {
 
     private final ActivismUserRepo activismUserRepo;
