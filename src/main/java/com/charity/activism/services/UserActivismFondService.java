@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.charity.activism.exceptions.ActivismNotFoundException;
 import com.charity.activism.exceptions.ActivismUserNotFoundException;
 import com.charity.activism.exceptions.FondNotFoundException;
 import com.charity.activism.exceptions.UserActivismFondNotFoundException;
@@ -84,9 +85,15 @@ public class UserActivismFondService {
     }
 
     @Transactional
-    public int save(UserActivismFond uFond, int idUser){
+    public int save(UserActivismFond uFond, int idUser, int idFond, int idActi){
         var user = aUserRepo.findById(idUser)
             .orElseThrow(ActivismUserNotFoundException::new);
+        var fond = fondRepo.findById(idFond)
+            .orElseThrow(FondNotFoundException::new);
+        var acti = activismRepo.findById(idActi)
+            .orElseThrow(ActivismNotFoundException::new);
+        uFond.setActivism(acti);
+        uFond.setFond(fond);
         uFond.setUser(user);
         user.getUserActivismFonds().add(uFond);
         return uActivismFondRepo.save(uFond).getId();

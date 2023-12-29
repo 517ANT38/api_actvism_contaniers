@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.charity.activism.dto.FondDto;
 import com.charity.activism.dto.IdDto;
+import com.charity.activism.dto.SomeFond;
 import com.charity.activism.mapers.FondMapper;
 import com.charity.activism.services.FondService;
 
@@ -54,10 +55,10 @@ public class FondController {
     }
 
     @PutMapping("/save")
-    public ResponseEntity<IdDto> save(@RequestBody FondDto fond){
+    public ResponseEntity<IdDto> save(@RequestBody SomeFond fond){
         return ResponseEntity
                         .ok()
-                        .body(new IdDto(fService.save(mapper.toEntity(fond))));
+                        .body(new IdDto(fService.save(mapper.toEntity(fond.getFondDto()))));
     }
 
 

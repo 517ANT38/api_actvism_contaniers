@@ -4,13 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * SomeFond
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ActivismDto {
-    private int idActivism;
+public class SomeFond {
 
-    private String name;
+    private FondDto fondDto;
 
-    private double pay;
 }

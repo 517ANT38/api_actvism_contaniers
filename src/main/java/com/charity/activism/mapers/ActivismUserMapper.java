@@ -12,12 +12,17 @@ public class ActivismUserMapper {
     
     public ActivismUserDtioOut toDto(ActivismUser aDto){
         var a = new ActivismUserDtioOut();
+        a.setId(aDto.getId());
         a.setFirstName(aDto.getFirstName());
         a.setLastName(aDto.getLastName());
         a.setMiddleName(aDto.getMiddleName());
         a.setLogin(aDto.getLogin());
         a.setRoles(aDto.getRoles().stream().map(x -> x.getNameRole()).toList());
-        a.setSubdivision(aDto.getSubdivision().getName());
+        var subd = aDto.getSubdivision();
+        if(subd == null)
+            a.setSubdivision(null);
+        else 
+            a.setSubdivision(subd.getName());
         return a;
     }
 

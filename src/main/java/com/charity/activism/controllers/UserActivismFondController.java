@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.charity.activism.dto.ActivismUserDtioOut;
+import com.charity.activism.dto.DateDto;
 import com.charity.activism.dto.IdDto;
 import com.charity.activism.dto.NewUserActivismFondDto;
 import com.charity.activism.dto.ResDto;
@@ -26,6 +26,8 @@ import com.charity.activism.mapers.UserActivismFondMapper;
 import com.charity.activism.services.UserActivismFondService;
 import com.charity.activism.util.DateAndSumHours;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -84,18 +86,19 @@ public class UserActivismFondController {
 
     @GetMapping("/statisticUserActivismHours/user/{actUserId}")
     public ResponseEntity<List<DateAndSumHours>> getDateAndSumHoursList(@PathVariable("actUserId") int actUserId,
-                                                                            @RequestParam Date date1, @RequestParam Date date2)
+                                                                           DateDto d)
     {
-        return ResponseEntity.ok().body(uService.statisticUserActivismIntervalDate(actUserId, date1, date2));
+        return ResponseEntity.ok().body(uService.statisticUserActivismIntervalDate(actUserId, d.getDate1(), d.getDate2()));
     }
    
-    @PutMapping("/user/{id}")
-    public ResponseEntity<IdDto> save(NewUserActivismFondDto uFond,@PathVariable("id") int actUserId){
-        return ResponseEntity.ok().body(new IdDto((uService.save(mFondMapper.toEntity(uFond),actUserId))));
+    @PutMapping("/add")
+    public ResponseEntity<IdDto> save(@RequestBody NewUserActivismFondDto uFond,
+        @PathParam("actUserId") int actUserId, @PathParam("fondId") int fondId, @PathParam("idActi") int actId){
+        return ResponseEntity.ok().body(new IdDto((uService.save(mFondMapper.toEntity(uFond),actUserId,fondId,actId))));
     }
 
     @PostMapping
-    public ResponseEntity<ResDto<Double>> getByUserSumCharity(int actUserId){
+    public ResponseEntity<ResDto<Double>> getByUserSumCharity(@PathVariable("actUserId") int actUserId){
 
         return ResponseEntity.ok().body(new ResDto<>(uService.getByUserSumCharity(actUserId)));
     }

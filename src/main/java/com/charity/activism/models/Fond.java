@@ -3,7 +3,11 @@ package com.charity.activism.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import static org.hibernate.annotations.CascadeType.ALL;
+
 import java.util.List;
+
+import org.hibernate.annotations.Cascade;
 
 
 @Table
@@ -22,6 +26,7 @@ public class Fond {
 
     @ManyToOne
     @JoinColumn(name = "typeFondId", referencedColumnName = "id")
+    @Cascade({ALL})
     private TypeFond typeFond;
 
     @OneToMany(mappedBy = "fond")

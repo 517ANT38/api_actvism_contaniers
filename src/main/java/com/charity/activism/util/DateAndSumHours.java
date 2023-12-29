@@ -1,6 +1,7 @@
 package com.charity.activism.util;
 
-import java.util.Date;
+import java.sql.Timestamp;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DateAndSumHours {
-    private Date date;
-    private int countHours;
+    private Timestamp date;
+    private Long countHours;
 }

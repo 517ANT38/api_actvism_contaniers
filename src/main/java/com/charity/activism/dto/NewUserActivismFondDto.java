@@ -11,10 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class NewUserActivismFondDto {
 
-    private FondDto fondDto;
-
-    private ActivismDto activismDto;
-
     private Date date;
 
     private int countHours;

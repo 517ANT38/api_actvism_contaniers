@@ -3,6 +3,7 @@ package com.charity.activism.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+
 import java.util.List;
 
 @Table

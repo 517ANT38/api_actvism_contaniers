@@ -4,6 +4,9 @@ import org.springframework.stereotype.Component;
 
 import com.charity.activism.dto.NewUserActivismFondDto;
 import com.charity.activism.dto.UserActivismFondDto;
+import com.charity.activism.models.Activism;
+import com.charity.activism.models.ActivismUser;
+import com.charity.activism.models.Fond;
 import com.charity.activism.models.UserActivismFond;
 
 import lombok.AllArgsConstructor;
@@ -15,11 +18,8 @@ public class UserActivismFondMapper {
     private final FondMapper fondMapper;
 
     public UserActivismFond toEntity(NewUserActivismFondDto dto){
-        var a = activismMapper.toEntity(dto.getActivismDto());
-        var f = fondMapper.toEntity(dto.getFondDto());
+        
         var uaf = new UserActivismFond();
-        uaf.setActivism(a);
-        uaf.setFond(f);
         uaf.setCountHours(dto.getCountHours());
         uaf.setDate(dto.getDate());
         uaf.setPaid(dto.isPaid());

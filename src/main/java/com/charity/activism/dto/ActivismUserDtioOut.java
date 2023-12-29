@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class ActivismUserDtioOut {
+    private int id;
     private String lastName;
     private String firstName;
     private String middleName;
