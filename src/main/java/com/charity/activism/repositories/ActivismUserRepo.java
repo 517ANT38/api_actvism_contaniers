@@ -24,7 +24,8 @@ public interface ActivismUserRepo extends JpaRepository<ActivismUser,Integer> {
     @Query(value = "insert into roleuser(idrole,iduser) values(:idR, :id)", nativeQuery = true)
     void addRoleUser(@Param("idR") int  idRole,@Param("id") int id);
 
-    Optional<ActivismUser> findByLogin(String  login);
+    @Query("from ActivismUser a left join fetch a.roles where a.login=:login")
+    Optional<ActivismUser> findByLogin(@Param("login")String  login);
 
     boolean existsByLogin(String login);
 }
