@@ -49,7 +49,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/login",
                 "/api/activismUsers/save",
                 "/swagger-ui/**",
-                "/swagger-resources/*",
+                "/swagger-resources/**",
                 "/v3/api-docs/**")
                 .permitAll()  
                 .requestMatchers("/**")
