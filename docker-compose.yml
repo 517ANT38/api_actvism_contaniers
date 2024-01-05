@@ -15,7 +15,7 @@ services:
       - service-db 
 
   service-db:
-    image: postgres:15-alpine
+    image: postgres
     container_name: db
     environment:
       POSTGRES_USER: postgres
