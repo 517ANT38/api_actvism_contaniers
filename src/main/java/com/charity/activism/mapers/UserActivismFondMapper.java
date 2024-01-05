@@ -4,9 +4,6 @@ import org.springframework.stereotype.Component;
 
 import com.charity.activism.dto.NewUserActivismFondDto;
 import com.charity.activism.dto.UserActivismFondDto;
-import com.charity.activism.models.Activism;
-import com.charity.activism.models.ActivismUser;
-import com.charity.activism.models.Fond;
 import com.charity.activism.models.UserActivismFond;
 
 import lombok.AllArgsConstructor;
