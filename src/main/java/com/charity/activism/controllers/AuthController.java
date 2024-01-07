@@ -58,7 +58,7 @@ public class AuthController {
     @ExceptionHandler(BadCredentialsException.class)
     private ResponseEntity<ResponseError> handleException(BadCredentialsException ex){
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
+                .status(HttpStatus.UNAUTHORIZED)
                 .body(new ResponseError("Bad login or password",LocalDateTime.now().toString()));
     }
 
